@@ -21,7 +21,7 @@ SliverAppBar sliverAppBarHome(context, title) {
         title,
         style: appBarStyle(),
       ),
-      expandedHeight: 199,
+      expandedHeight: 257,
       flexibleSpace: FlexibleSpaceBar(
         background: new Image.asset(
           assCoverHonme,

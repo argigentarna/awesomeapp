@@ -17,6 +17,10 @@ dependencies:
   string_validator: ^0.3.0
   google_fonts: ^2.1.0
   animations: ^2.0.0
+  cached_network_image: ^3.0.0
+  shimmer: ^2.0.0
+  flutter_linkify: ^5.0.2
+  url_launcher: ^6.0.3
 
 dev_dependencies:
   flutter_test:
@@ -25,4 +29,4 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-  - assets/images/evermos_cover.jpg
+    - assets/images/evermos_cover.jpg

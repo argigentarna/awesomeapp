@@ -1,5 +1,3 @@
-import 'package:animations/animations.dart';
-import 'package:awesomeapp/helper/const.dart';
 import 'package:awesomeapp/provider/homepage.dart';
 import 'package:awesomeapp/widgets/appbar.dart';
 import 'package:awesomeapp/widgets/home_gridview.dart';
@@ -16,6 +14,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool _isInit = true;
+
+  @override
+  void didChangeDependencies() async {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    if (_isInit) {
+      await Provider.of<HomepageProvider>(context, listen: false)
+          .fetchHomeFeeds();
+      setState(() {
+        _isInit = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var _currentHome = [

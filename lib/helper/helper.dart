@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:awesomeapp/models/response.dart';
 import 'package:http/http.dart' as http;
 import 'package:string_validator/string_validator.dart';
 
@@ -8,10 +9,9 @@ import 'const.dart';
 Future<void> doGet(
   String url,
   String a,
-  dynamic body,
   callback(Map<String, dynamic> res),
 ) async {
-  Map<String, dynamic> res;
+  // Map<String, dynamic> res;
   try {
     final http.Response response = await http.get(
       Uri.parse(url + a),
@@ -20,32 +20,15 @@ Future<void> doGet(
         'Authorization': API_KEY,
       },
     );
-    if (response.statusCode == 200) {
-      res = await json.decode(response.body);
-      callback(res);
-    } else {
-      try {
-        if (res != null) {
-          callback(
-            {
-              "rc": res['rc'],
-              "message": res['message'],
-            },
-          );
-        } else {
-          callback(
-            {
-              "rc": 400,
-              "message": FAILED_TO_CONNECT,
-            },
-          );
-        }
-      } catch (e) {
-        print("error");
-        print(e);
-      }
-    }
+    Response res = Response(
+      rc: response.statusCode,
+      data: json.decode(response.body),
+    );
+
+    callback(res.toJson());
   } catch (e) {
+    print("THERE IS ERROR");
+    print(e.toString());
     var err;
     final unconnect = matches(
       e.toString(),

@@ -1,5 +1,8 @@
+import 'package:awesomeapp/helper/const.dart';
+import 'package:awesomeapp/provider/homepage.dart';
 import 'package:awesomeapp/styles/appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 Widget appBarHomePage(context, title) {
   return AppBar(
@@ -8,16 +11,44 @@ Widget appBarHomePage(context, title) {
       title,
       style: appBarStyle(),
     ),
-    actions: [
-      Icon(
-        Icons.grid_view,
+  );
+}
+
+SliverAppBar sliverAppBarHome(context, title) {
+  var prov = Provider.of<HomepageProvider>(context);
+  return SliverAppBar(
+      title: Text(
+        title,
+        style: appBarStyle(),
       ),
-      Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Icon(
-          Icons.list_alt_rounded,
+      expandedHeight: 199,
+      flexibleSpace: FlexibleSpaceBar(
+        background: new Image.asset(
+          assCoverHonme,
+          fit: BoxFit.cover,
         ),
       ),
-    ],
-  );
+      actions: [
+        GestureDetector(
+          onTap: () {
+            // Rubah homefeeds menjadi tampilan GridView
+            prov.currentIndex = 0;
+          },
+          child: Icon(
+            Icons.grid_view,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: GestureDetector(
+            onTap: () {
+              // Rubah homefeeds menjadi tampilan ListView
+              prov.currentIndex = 1;
+            },
+            child: Icon(
+              Icons.view_list,
+            ),
+          ),
+        ),
+      ]);
 }

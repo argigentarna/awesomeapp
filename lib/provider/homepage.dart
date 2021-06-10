@@ -9,24 +9,48 @@ class HomepageProvider with ChangeNotifier {
   int _currentIndex = 0;
   int _pageHomeFeeds = 1;
 
+  int get countListHomeFeeds {
+    return _listHomeFeeds != null ? _listHomeFeeds.length : 0;
+  }
+
+  get listHomeFeeds => _listHomeFeeds;
+  get pageHomeFeeds => _pageHomeFeeds;
+
   get currentIndex => _currentIndex;
   set currentIndex(int index) {
     _currentIndex = index;
     notifyListeners();
   }
 
-  get listHomeFeeds => _listHomeFeeds;
-  get pageHomeFeeds => _pageHomeFeeds;
+  ScrollController _controllerScroll;
+  get controllerScroll => _controllerScroll;
+  set controllerScroll(val) {
+    _controllerScroll = val;
+    notifyListeners();
+  }
 
-  int get countListHomeFeeds {
-    return _listHomeFeeds != null ? _listHomeFeeds.length : 0;
+  Future<void> clearFeeds() async {
+    _pageHomeFeeds = 1;
+    _listHomeFeeds = [];
+    notifyListeners();
+  }
+
+  Future<bool> isLoadMore() async {
+    Future<bool> status;
+    if (_controllerScroll.position.pixels ==
+        _controllerScroll.position.maxScrollExtent) {
+      status = Future<bool>.value(true);
+    } else {
+      status = Future<bool>.value(false);
+    }
+    return await status;
   }
 
   Future<void> fetchHomeFeeds() async {
     var response;
     await doGet(
       API_URL,
-      apiCurated(1, 33),
+      apiCurated(_pageHomeFeeds, 30),
       (res) {
         response = res;
         notifyListeners();
@@ -44,8 +68,9 @@ class HomepageProvider with ChangeNotifier {
             notifyListeners();
             if (countListHomeFeeds > 0) {
               print("pit stop 3");
+              print(res['data'].toString());
               for (var i = 0; i < res['data']['photos'].length; i++) {
-                var home = Photos.fromJson(res['photos'][i]);
+                var home = Photos.fromJson(res['data']['photos'][i]);
                 _listTemp.add(home);
                 notifyListeners();
               }

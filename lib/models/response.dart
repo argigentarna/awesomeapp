@@ -1,18 +1,18 @@
 class Response {
   final int rc;
-  // final String status;
+  final String message;
   final dynamic data;
 
   Response({
     this.rc,
-    // this.status,
+    this.message,
     this.data,
   });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['rc'] = this.rc;
-    // data['status'] = this.status;
+    data['message'] = this.message;
     data['data'] = this.data;
     return data;
   }

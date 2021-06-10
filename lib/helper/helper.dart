@@ -11,7 +11,6 @@ Future<void> doGet(
   String a,
   callback(Map<String, dynamic> res),
 ) async {
-  // Map<String, dynamic> res;
   try {
     final http.Response response = await http.get(
       Uri.parse(url + a),
@@ -20,10 +19,23 @@ Future<void> doGet(
         'Authorization': API_KEY,
       },
     );
-    Response res = Response(
-      rc: response.statusCode,
-      data: json.decode(response.body),
-    );
+    var res;
+
+    if (response.statusCode == 200) {
+      print("CHECK RES BODY");
+      print(response.body);
+      res = Response(
+        rc: response.statusCode,
+        data: json.decode(response.body),
+        message: "Success",
+      );
+    } else {
+      res = Response(
+        rc: response.statusCode,
+        data: json.decode(response.body),
+        message: json.decode(response.body),
+      );
+    }
 
     callback(res.toJson());
   } catch (e) {
@@ -40,7 +52,7 @@ Future<void> doGet(
     } else {
       err = FAILED_TO_CONNECT;
     }
-    callback({"status": 400, "message": err.toString()});
+    callback({"rc": 400, "message": err.toString()});
     return null;
   }
 

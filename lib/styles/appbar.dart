@@ -8,3 +8,12 @@ TextStyle appBarStyle() {
     fontSize: 17.0,
   );
 }
+
+TextStyle appBarDetailFeedsStyle() {
+  return GoogleFonts.poppins(
+    fontWeight: FontWeight.bold,
+    fontStyle: FontStyle.normal,
+    fontSize: 17.0,
+    color: Colors.white,
+  );
+}

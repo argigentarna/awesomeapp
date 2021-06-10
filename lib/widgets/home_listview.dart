@@ -36,9 +36,9 @@ class ListViewHome extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CachedNetworkImage(
-                      maxHeightDiskCache: 500,
-                      useOldImageOnUrlChange: false,
-                      imageUrl: prov.listHomeFeeds[index].src.original,
+                      maxHeightDiskCache: 200,
+                      // useOldImageOnUrlChange: false,
+                      imageUrl: prov.listHomeFeeds[index].src.medium,
                       fit: BoxFit.cover,
                       width: 99,
                       height: 99,

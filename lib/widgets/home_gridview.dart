@@ -52,9 +52,9 @@ class GridViewHome extends StatelessWidget {
                         height: 212,
                         alignment: Alignment.center,
                         child: CachedNetworkImage(
-                          maxHeightDiskCache: 500,
-                          useOldImageOnUrlChange: false,
-                          imageUrl: prov.listHomeFeeds[index].src.original,
+                          maxHeightDiskCache: 200,
+                          // useOldImageOnUrlChange: false,
+                          imageUrl: prov.listHomeFeeds[index].src.medium,
                           fit: BoxFit.cover,
                           width: MediaQuery.of(context).size.width,
                           placeholder: (context, url) => Center(
